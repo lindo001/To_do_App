@@ -7,7 +7,6 @@ import 'package:todoapp_classic/componets/zoeTaskTracker.dart';
 import 'package:todoapp_classic/componets/zoeThemes.dart';
 import 'package:todoapp_classic/pages/homePage.dart';
 import 'package:todoapp_classic/pages/settings.dart';
-import 'package:todoapp_classic/pages/taskmodifcation.dart';
 
  void main() async {
   
@@ -27,12 +26,13 @@ class MainApp extends StatelessWidget {
     final holdZoe = Provider.of<zoeThemes>(context);
     return MaterialApp(
       theme: holdZoe.getZoeTheme(),
-      // home: Settings(),
+      debugShowCheckedModeBanner: false,
+// 
       initialRoute: homePage.id,
       routes: {
         homePage.id:(context) =>  homePage(),
-        Settings.id:(context) =>  Settings(),
-        taskModification.id:(context) => const taskModification()
+        // Settings.id:(context) =>  Settings(),
+        // taskModification.id:(context) =>  taskModification()
       },
 
     );
