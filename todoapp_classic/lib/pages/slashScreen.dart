@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todoapp_classic/pages/homePage.dart';
+import 'package:todoapp_classic/pages/landingPage.dart';
 
 class Slashscreen extends StatefulWidget {
   Slashscreen({super.key});
@@ -21,7 +21,7 @@ class _SlashscreenState extends State<Slashscreen> {
     super.initState();
     Timer(Duration(seconds: 3), ()=>
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>
-    homePage()
+    Landingpage()
     ))
     );
   }
