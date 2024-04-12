@@ -10,6 +10,10 @@ class CustomThemes extends ChangeNotifier{
     notifyListeners();}
    ThemeData getCurrentTheme(){ 
     return _isLightTheme?newLightTheme:newDarkTheme;}
+
+   getZoeIcon(){
+    return _isLightTheme? Icon(Icons.light_mode):Icon(Icons.dark_mode);
+  }
 ThemeData newLightTheme =ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.grey.shade300 

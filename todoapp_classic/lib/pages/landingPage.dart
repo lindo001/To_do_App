@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todoapp_classic/componets/customWidgets.dart';
+import 'package:todoapp_classic/componets/dateFormater.dart';
+import 'package:todoapp_classic/pages/settingsPage.dart';
 import 'package:todoapp_classic/pages/taskCreationPage.dart';
 
 class Landingpage extends StatefulWidget {
@@ -19,6 +21,7 @@ class Landingpage extends StatefulWidget {
 
 class _LandingpageState extends State<Landingpage> {
   TextEditingController controller = TextEditingController();
+  Dateformater dateformater = Dateformater();
   final _dataBase = Hive.box("todo_DB");
   //NavigateTo
 void editDB(index){
@@ -36,7 +39,7 @@ void markDB(){}
 void saveToDB(String title,bool isDone){
 
   setState(() {
-    _dataBase.add({"title":title,"isDone":isDone});});
+    _dataBase.add({"title":title,"isDone":isDone,"date":dateformater.getCurrentDate()});});
     Navigator.of(context).pop();
 }
 //retrieve
@@ -44,9 +47,14 @@ getFromDB(int index){
   return _dataBase.get(index);   
 }
 //delete
-removeDB(int index){
+removeDB(int? index){
   setState(() {
-    _dataBase.deleteAt(index);
+    _dataBase.deleteAt(index!);
+  });
+}
+cleanDB(){
+  setState(() {
+    // _dataBase.;
   });
 }
 void goTo(Widget WhatPage){
@@ -71,7 +79,7 @@ void goTo(Widget WhatPage){
               Text("ToDo List", style: GoogleFonts.share(fontSize: 26,fontWeight: FontWeight.bold),),
               const SizedBox(width: 60),
               IconButton(onPressed: (){
-                print(_dataBase.getAt(0));
+                goTo(Settingspage(cleanFunction: cleanDB()));
               }, icon: Icon(Icons.more_vert))
             ],
           ),
@@ -102,7 +110,7 @@ void goTo(Widget WhatPage){
               child: Column(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,children: [
                 Text("Today", style: GoogleFonts.share(fontSize: 19,fontWeight: FontWeight.w700),),
-                Text(_date.month.toString() + _date.day.toString() +_date.year.toString())
+                Text(dateformater.getCurrentDate())
         
               ],),
               )),
