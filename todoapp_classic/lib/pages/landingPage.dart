@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todoapp_classic/componets/customWidgets.dart';
 import 'package:todoapp_classic/pages/taskCreationPage.dart';
 
@@ -13,17 +14,41 @@ class Landingpage extends StatefulWidget {
 }
 
 
-//write
-void writeToDB(){
 
-}
-//read
-//delete
 
 
 class _LandingpageState extends State<Landingpage> {
   TextEditingController controller = TextEditingController();
+  final _dataBase = Hive.box("todo_DB");
   //NavigateTo
+void editDB(index){
+  setState(() {
+    _dataBase.getAt(index)["isDone"] =! _dataBase.getAt(index)["isDone"];
+  });
+}
+void markDB(){}
+
+
+
+
+//////////////////////
+//write
+void saveToDB(String title,bool isDone){
+
+  setState(() {
+    _dataBase.add({"title":title,"isDone":isDone});});
+    Navigator.of(context).pop();
+}
+//retrieve
+getFromDB(int index){
+  return _dataBase.get(index);   
+}
+//delete
+removeDB(int index){
+  setState(() {
+    _dataBase.deleteAt(index);
+  });
+}
 void goTo(Widget WhatPage){
   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> WhatPage));
 }
@@ -45,13 +70,15 @@ void goTo(Widget WhatPage){
               const SizedBox(width: 60),
               Text("ToDo List", style: GoogleFonts.share(fontSize: 26,fontWeight: FontWeight.bold),),
               const SizedBox(width: 60),
-              IconButton(onPressed: (){}, icon: Icon(Icons.more_vert))
+              IconButton(onPressed: (){
+                print(_dataBase.getAt(0));
+              }, icon: Icon(Icons.more_vert))
             ],
           ),
         ),),
       )),
       floatingActionButton: GestureDetector(
-        onTap: ()=>goTo(Taskcreationpage(title: controller, isDone: false)),
+        onTap: ()=>goTo(Taskcreationpage(title: controller, isDone: true, saveFuncion: saveToDB)),
         child: Container(
           height: _screenSize.height/9,
           width: _screenSize.height/9,
@@ -80,9 +107,9 @@ void goTo(Widget WhatPage){
               ],),
               )),
               Expanded(flex:10,
-                child: ListView.builder(itemCount: 6,itemBuilder: (context,index)=>
-                Customwidgets(todo: "todo",isComplete: true,)
-                ),
+                child: _dataBase.length>0?ListView.builder(itemCount: _dataBase.length,itemBuilder: (context,index)=>
+                Customwidgets(todo: _dataBase.getAt(index)["title"],isComplete: _dataBase.getAt(index)["isDone"], editDB: editDB, markDB: markDB, removeDB: removeDB, index: index)
+                ):const Center(child: Text("Looks like theres nothing here"),)
               )
             ],
           ),
