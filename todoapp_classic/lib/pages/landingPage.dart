@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:todoapp_classic/componets/customThemes.dart';
 import 'package:todoapp_classic/componets/customWidgets.dart';
 import 'package:todoapp_classic/componets/dateFormater.dart';
 import 'package:todoapp_classic/pages/settingsPage.dart';
@@ -25,11 +27,15 @@ class _LandingpageState extends State<Landingpage> {
   final _dataBase = Hive.box("todo_DB");
   //NavigateTo
 void editDB(index){
-  setState(() {
+  goTo(Taskcreationpage(title: _dataBase.getAt(index)["title"], isDone: _dataBase.getAt(index)["isDone"], saveFuncion: updateSavedDB));
+}
+
+void updateSavedDB(index){}
+void markDB(index){
+    setState(() {
     _dataBase.getAt(index)["isDone"] =! _dataBase.getAt(index)["isDone"];
   });
 }
-void markDB(){}
 
 
 
@@ -51,6 +57,7 @@ removeDB(int? index){
   setState(() {
     _dataBase.deleteAt(index!);
   });
+  controller.clear();
 }
 cleanDB(){
   setState(() {
@@ -64,10 +71,11 @@ void goTo(Widget WhatPage){
   Widget build(BuildContext context) {
     var _screenSize = MediaQuery.of(context).size;
     DateTime _date = DateTime.now();
+    final provider = Provider.of<CustomThemes>(context);
     return  Scaffold(
       appBar: PreferredSize(preferredSize: Size(_screenSize.width, _screenSize.height/7), child: Container(
 
-        color: Colors.blue,
+        color: provider.getCurrentTheme().colorScheme.primary,
         child: Align(alignment: Alignment.topLeft,child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Row(
@@ -91,7 +99,7 @@ void goTo(Widget WhatPage){
           height: _screenSize.height/9,
           width: _screenSize.height/9,
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color:  provider.getCurrentTheme().colorScheme.primary,
             borderRadius: BorderRadius.circular(60)
           ),
           child: Icon(Icons.add,size: 40,),
@@ -116,7 +124,7 @@ void goTo(Widget WhatPage){
               )),
               Expanded(flex:10,
                 child: _dataBase.length>0?ListView.builder(itemCount: _dataBase.length,itemBuilder: (context,index)=>
-                Customwidgets(todo: _dataBase.getAt(index)["title"],isComplete: _dataBase.getAt(index)["isDone"], editDB: editDB, markDB: markDB, removeDB: removeDB, index: index)
+                Customwidgets(todo: _dataBase.getAt(index)["title"],isComplete: _dataBase.getAt(index)["isDone"],  markDB: markDB,editDB: editDB, removeDB: removeDB, index: index,dateCreated: _dataBase.getAt(index)["date"],)
                 ):const Center(child: Text("Looks like theres nothing here"),)
               )
             ],

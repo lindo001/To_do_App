@@ -23,3 +23,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+  fonts:
+    - family: Orbitron
+      fonts:
+        - asset: fonts/Orbitron-VariableFont_wght.ttf
+    - family: TiltNeon
+      fonts:
+        - asset: fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf
+    - family: YanoneKaffeesatz
+      fonts:
+        - asset: fonts/YanoneKaffeesatz-VariableFont_wght.ttf

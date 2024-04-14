@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
+
+import 'customThemes.dart';
 
 class Customwidgets extends StatelessWidget {
     String todo;
@@ -10,19 +13,29 @@ class Customwidgets extends StatelessWidget {
     final Function markDB;
     final Function removeDB;
     final int index;
+    final String dateCreated;
+
     // DateTime _time = DateTime.now();
-  Customwidgets({super.key,required this.isComplete,required this.todo,required this.editDB,required this.markDB,required this.removeDB,required this.index});
+  Customwidgets({super.key,
+                required this.isComplete,
+                required this.todo,
+                required this.editDB,
+                required this.markDB,
+                required this.removeDB,
+                required this.index,
+                required this.dateCreated
+                });
 
   @override
   Widget build(BuildContext context) {
-
+    final providerLink = Provider.of<CustomThemes>(context);
     DateTime _time = DateTime.now();
     final double _height = MediaQuery.of(context).size.height/8;
     return GestureDetector(
       //Edit
-      onTap: ()=> editDB(index),
+      onTap: ()=> markDB(index),
       //done
-      onDoubleTap: (){},
+      onDoubleTap: ()=>editDB(index),
       //remove
       onLongPress: ()=>removeDB(index),
       child: Container(
@@ -30,27 +43,30 @@ class Customwidgets extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: Colors.grey.shade900,
+          color: providerLink.getCurrentTheme().colorScheme.primary,
           borderRadius: BorderRadius.circular(10)
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ContainerTileDetails(isComplete!, todo),
-            Text(DateTime.now().hour.toString())
+            ContainerTileDetails(isComplete, todo,context),
+            Text(dateCreated)
           ],
         ),
       ),
     );
   }
 
-  Row ContainerTileDetails(bool isComplete, String todo) {
+  Row ContainerTileDetails(bool isComplete, String todo,BuildContext context) {
+    final providerLink = Provider.of<CustomThemes>(context).getCurrentTheme().colorScheme.tertiary;
+    // final textColor = providerLink.getCurrentTheme().colorScheme.tertiary;
+
     return Row(children: [
-    isComplete? Icon(Icons.radio_button_unchecked,color: Colors.white,):Icon(Icons.check_circle_outline,color: Colors.grey,),
+    isComplete? Icon(Icons.radio_button_unchecked,color: providerLink,):Icon(Icons.check_circle_outline,color: Colors.grey,),
     const SizedBox(width: 5),
     Text(todo, style: TextStyle(decoration: isComplete?TextDecoration.none:TextDecoration.lineThrough,
     
-    color: isComplete?Colors.white:Colors.grey))
+    color: isComplete? providerLink:Colors.grey))
 
     ],);
   }

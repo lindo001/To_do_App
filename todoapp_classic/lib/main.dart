@@ -5,19 +5,19 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'componets/customThemes.dart';
-import 'pages/slashScreen.dart';
-// import 'package:todoapp_classic/pages/settings.dart';
+import 'pages/slash_screen.dart';
+
 
  void main() async {
   
   //init
   await Hive.initFlutter();
   //open
-  final database = await Hive.openBox("todo_DB");
+  final _ = await Hive.openBox("todo_DB");
 runApp(MultiProvider(providers: [
 
   ChangeNotifierProvider(create: (context)=>CustomThemes())
-],child: MainApp(),));
+],child: const MainApp(),));
 }
 
 class MainApp extends StatelessWidget {
@@ -29,7 +29,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: df.getCurrentTheme(),
       debugShowCheckedModeBanner: false,
-  home: Slashscreen()
+  home: const Slashscreen()
 
     );
   }

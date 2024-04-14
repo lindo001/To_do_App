@@ -17,12 +17,24 @@ class CustomThemes extends ChangeNotifier{
 ThemeData newLightTheme =ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.grey.shade300 
+  ,colorScheme: ColorScheme.light(
+    brightness: Brightness.light,
+    primary: Colors.blueGrey,
+    tertiary: Colors.black,
+    secondary: Colors.grey.shade400
+  )
 
 );
 ThemeData newDarkTheme =ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Colors.black,
-  primaryColor: Colors.grey,
+    colorScheme: ColorScheme.dark(
+    brightness: Brightness.dark,
+    primary: Colors.grey.shade800,
+    tertiary: Colors.white,
+    secondary: Colors.blue,
+    
+  )
   
 
 );
