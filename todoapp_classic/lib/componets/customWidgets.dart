@@ -50,7 +50,9 @@ class Customwidgets extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ContainerTileDetails(isComplete, todo,context),
-            Text(dateCreated)
+            // Text(dateCreated)
+            IconButton(onPressed: (){}, icon: Icon(Icons.more_vert))
+            
           ],
         ),
       ),

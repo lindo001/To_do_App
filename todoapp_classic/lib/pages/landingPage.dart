@@ -82,7 +82,6 @@ void goTo(Widget WhatPage){
             
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios)),
               const SizedBox(width: 60),
               Text("ToDo List", style: GoogleFonts.share(fontSize: 26,fontWeight: FontWeight.bold),),
               const SizedBox(width: 60),
