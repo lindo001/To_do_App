@@ -25,6 +25,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/man.png
   fonts:
     - family: Orbitron
       fonts:

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todoapp_classic/pages/landingPage.dart';
-import 'package:todoapp_classic/pages/main_page.dart';
+import 'MainPage.dart';
 
 class Slashscreen extends StatefulWidget {
+  static String id = "Slashscreen";
   const Slashscreen({super.key});
 
   @override
@@ -17,9 +17,11 @@ class _SlashscreenState extends State<Slashscreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), ()=>
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>
-    const MainPage()
-    ))
+    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>
+    // const MainPage()
+    // ))
+    Navigator.of(context).pushNamed(MainPage.id)
+
     );
   }
   @override
