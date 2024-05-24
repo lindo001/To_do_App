@@ -7,6 +7,9 @@ class Persistentdb{
 
   Persistentdb({required this.task, required this.istaskComplete});
 
+  String getString(){
+    return this.task;
+  }
   
   
 }

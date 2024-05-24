@@ -28,23 +28,24 @@ class _SlashscreenState extends State<Slashscreen> {
   Widget build(BuildContext context) {
     final double screenSizeh = MediaQuery.of(context).size.height;
     final double screenSizew = MediaQuery.of(context).size.width;
-    const String studioName = "by Epic kiwi Studios";
-    const String appName = "_Task Manager";
+    const String studioName = "Hop into Productivity!";
+    const String appName = "_Rabbit Notes";
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SizedBox(
+      body: Container(
         height: screenSizeh,
         width: screenSizew,
+        padding: EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height:250),
-            Image.asset("assets/notes.png",height: screenSizeh * 0.10,),
-            const SizedBox(height: 11,),
+             SizedBox(height: screenSizeh*0.100),
+            Image.asset("assets/rabbit1.jpg",height:screenSizeh*0.15,),
+            // const SizedBox(height: 1,),
             Text(appName,style: TextStyle(fontFamily: "Orbitron",fontSize: 29,color: Colors.grey.shade800),),
-            const SizedBox(height: 290),
-            Text(studioName,style: TextStyle(fontFamily: "Orbitron",fontSize:15,color: Colors.grey.shade700),),
+            const SizedBox(height: 10),
+            Text(studioName,style: TextStyle(fontFamily: "Orbitron",fontSize:10,color: Colors.grey.shade700),),
 
 
           ],

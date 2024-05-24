@@ -7,6 +7,7 @@ import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/styles.dart';
 import '../widgets/datePickerField.dart';
+import '../widgets/frostedGlassContainer.dart';
 import '../widgets/inputField.dart';
 import '../widgets/mainButton.dart';
 import '../widgets/todaTaskTile.dart';
@@ -22,20 +23,32 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final db = Hive.box("persistingdata");
   //Write
-  void save(Persistentdb data){
-    db.add(data);
+  void save(String data,String date){
+setState(() {
+
+      db.add([data,date]);
+clean();
+closeNOpenTask();
+});
   }
   //Read
-  read(int index){
-    return db.getAt(index);
-  }
+  read(int index)=>setState(()=> db.getAt(index));
+//   read(){
+// setState(() {
+//       return db.getAt(index);
+// });
+//   }
   //Modify
   edit(int index, Persistentdb value){
-    db.putAt(index, value);
+   setState(() {
+      db.putAt(index, value);
+   });
   }
   //Delete
   void remove(int index){
-    db.deleteAt(index);
+    setState(() {
+      db.deleteAt(index);
+    });
   }
 
 
@@ -46,20 +59,22 @@ class _MainPageState extends State<MainPage> {
   bool isTaskOpen = false;
 
   void closeNOpenTask(){
-      print(isTaskOpen);
 
     setState(() {
       isTaskOpen =! isTaskOpen;
-      print(isTaskOpen);
     });
   }
-
+void clean(){
+      _taskController.clear();
+    _dateController.clear();
+}
   @override
   Widget build(BuildContext context) {
-    // final user = Provider.of<String>(context);
+    final screen = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: ()=>closeNOpenTask(),backgroundColor: limeGreen,),
-      bottomNavigationBar: isTaskOpen? Container(height: 500,color: darkGray,
+      floatingActionButton: 
+      isTaskOpen?SizedBox():FloatingActionButton(onPressed: ()=>closeNOpenTask(),backgroundColor: limeGreen,),
+      bottomNavigationBar: isTaskOpen? Container(height:screen.width ,color: darkGray,
       padding: EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -68,8 +83,7 @@ class _MainPageState extends State<MainPage> {
         Text(cat,style: tiltNeon),
         Text("Title"),
         inputField(inputFieldController: _taskController,hintText: "Input"),
-      SizedBox(height: 15,),
-// 
+      SizedBox(height:screen.height*0.015,),
         Text("Date"),
 
  DatePickerField(
@@ -79,25 +93,42 @@ class _MainPageState extends State<MainPage> {
                 setState(() {
                   _selectedDate = date; 
                   _dateController.text = _selectedDate; 
-                  print(_selectedDate);
 
                 });
               },
             ),
- 
+ SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Mainbutton(text: "Cancel", onCall: ()=>closeNOpenTask(),color: null),
-            Mainbutton(text: "Next", onCall: ()=>closeNOpenTask(),color: limeGreen),
-          ],
+            Mainbutton(text: "Cancel", onCall: (){clean();closeNOpenTask();},color: null),
+            Mainbutton(text: "Next", onCall: ()=>save(_taskController.text,_dateController.text),color: limeGreen),
+          ]
         )
       ],),
       
       ):null,
-      body: Column(children: [
-        Todatasktile()
-      ],)
+      body: db.length>0?Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: ListView.builder(
+              itemCount: db.length,
+              itemBuilder: (context,index){
+                return Todatasktile(list: db.getAt(index),function:()=>remove(index),);
+              }),
+          ),
+          isTaskOpen?FrostedGlassBox():SizedBox()
+        ],
+      ):Center(child: isTaskOpen?FrostedGlassBox():Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Image.asset("assets/sad.png",height: screen.width*0.30,),
+        SizedBox(height: screen.width*0.25),
+        Text("There seems to be nothing here",style: TextStyle(fontFamily: "tiltNeon",fontSize: 20),)
+           
+      ],),)
     );
   }
 }

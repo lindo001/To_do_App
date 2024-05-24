@@ -1,7 +1,7 @@
-# _Task Manager
+# _Rabbit Notes
 
 
-_Task Manager is a simple yet powerful todo list application designed to help you organize your tasks and stay productive.
+_Rabbit Notes is a simple yet powerful todo list application designed to help you organize your tasks and stay productive.
 
 ## Features
 
@@ -14,7 +14,7 @@ _Task Manager is a simple yet powerful todo list application designed to help yo
 
 ## Installation 
 
-To get started with _Task Manager, follow these simple steps(You must have flutter installed):
+To get started with _Rabbit Notes, follow these simple steps(You must have flutter installed):
 
 1. Clone the repository:
 
@@ -48,3 +48,9 @@ Contributions are welcome! If you find any bugs or have suggestions for new feat
 
     This project was inspired by the need for a simple yet feature-rich todo list application.
     Special thanks to icons8 for providing icons used in this project.
+
+# License
+
+_Rabbit Notes for macOS is an Open Source project covered by the GNU General Public License version 2.
+
+Happy noting!
