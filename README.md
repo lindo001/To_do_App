@@ -19,7 +19,7 @@ To get started with _Rabbit Notes, follow these simple steps(You must have flutt
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/awesome-todo.git
+   git clone https://github.com/lindo001/_rabbit-notes.git
 
 2. Open VSCode/ locate the 'pubspec.yaml' file:
 
