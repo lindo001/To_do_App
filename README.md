@@ -49,8 +49,5 @@ Contributions are welcome! If you find any bugs or have suggestions for new feat
     This project was inspired by the need for a simple yet feature-rich todo list application.
     Special thanks to icons8 for providing icons used in this project.
 
-# License
-
-_Rabbit Notes is an Open Source project covered by the GNU General Public License version 2.
 
 Happy hopping!
