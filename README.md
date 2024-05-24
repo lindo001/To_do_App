@@ -51,6 +51,6 @@ Contributions are welcome! If you find any bugs or have suggestions for new feat
 
 # License
 
-_Rabbit Notes for macOS is an Open Source project covered by the GNU General Public License version 2.
+_Rabbit Notes is an Open Source project covered by the GNU General Public License version 2.
 
-Happy noting!
+Happy hopping!
